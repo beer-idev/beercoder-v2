@@ -39,3 +39,17 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# IDE/OS
+.idea/
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Local data & caches
+.eslintcache
+.cache/
+.turbo/
+
+# App runtime data (contact submissions stored locally during dev)
+/.data/

@@ -1,8 +1,15 @@
 @import "tailwindcss";
 
-:root {
+/* :root {
   --background: #ffffff;
   --foreground: #171717;
+} */
+:root {
+  --prussian-blue: #0b132b;
+  --space-indigo: #1c2541;
+  --dusk-blue: #3a506b;
+  --tropical-teal: #5bc0be;
+  --neon-ice: #6fffe9;
 }
 
 @theme inline {
@@ -18,9 +25,204 @@
     --foreground: #ededed;
   }
 }
-
+/* พื้นฐานทั้งเว็บ */
 body {
+  background-color: #000000; /* solid black background */
+  color: #e5e7eb; /* text สีเทาอ่อนอ่านง่ายบนพื้นมืด */
+}
+/* body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+} */
+
+/* animations for moving blurred background */
+@keyframes floatA {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(30px, -20px) scale(1.05); }
+}
+@keyframes floatB {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-25px, 20px) scale(1.08); }
+}
+@keyframes floatC {
+  0%, 100% { transform: translate(-50%, 0) scale(1); }
+  50% { transform: translate(-55%, 10px) scale(1.03); }
+}
+
+/* organic blob morphing (border-radius + drift) */
+@keyframes blobA {
+  0% { border-radius: 50%; transform: translate(0,0) rotate(0deg) scale(1,1); }
+  25% { border-radius: 55% 45% 60% 40% / 45% 55% 40% 60%; transform: translate(28px,-22px) rotate(6deg) scale(1.35,0.85); }
+  50% { border-radius: 40% 60% 45% 55% / 60% 40% 60% 40%; transform: translate(-16px,12px) rotate(-5deg) scale(0.9,1.25); }
+  75% { border-radius: 62% 38% 50% 50% / 42% 58% 46% 54%; transform: translate(10px,6px) rotate(3deg) scale(1.15,0.95); }
+  100% { border-radius: 50%; transform: translate(0,0) rotate(0deg) scale(1,1); }
+}
+@keyframes blobB {
+  0% { border-radius: 50%; transform: translate(0,0) rotate(0deg) scale(1,1); }
+  50% { border-radius: 35% 65% 60% 40% / 60% 40% 60% 40%; transform: translate(-24px,18px) rotate(-8deg) scale(1.4,0.8); }
+  100% { border-radius: 50%; transform: translate(0,0) rotate(0deg) scale(1,1); }
+}
+@keyframes blobC {
+  0% { border-radius: 50%; transform: translate(-50%,0) rotate(0deg) scale(1,1); }
+  50% { border-radius: 65% 35% 55% 45% / 35% 65% 35% 65%; transform: translate(calc(-50% - 20px),14px) rotate(6deg) scale(1.25,0.9); }
+  100% { border-radius: 50%; transform: translate(-50%,0) rotate(0deg) scale(1,1); }
+}
+/* subtle ring motion for hero */
+@keyframes ringPulse {
+  0%, 100% { transform: scale(1); opacity: 0.7; }
+  50% { transform: scale(1.035); opacity: 0.95; }
+}
+@keyframes ringPulse2 {
+  0%, 100% { transform: scale(1.01); opacity: 0.65; }
+  50% { transform: scale(0.985); opacity: 0.85; }
+}
+
+/* smooth in-page anchor scrolling */
+html { scroll-behavior: smooth; }
+
+/* subtle drifting for tech icons */
+@keyframes driftX {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(12px); }
+}
+@keyframes driftY {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+/* orbit helpers for hero tech icons */
+@keyframes orbitCW { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes orbitCCW { from { transform: rotate(360deg); } to { transform: rotate(0deg); } }
+.orbit { position: absolute; }
+.orbit .ring { position: absolute; inset: 0; animation: orbitCW var(--duration,18s) linear infinite; }
+.orbit .pos { position: absolute; top: 0; left: 50%; transform: translateX(-50%); }
+.orbit .icon { animation: orbitCCW var(--duration,18s) linear infinite; }
+
+/* themed scrollbar (subtle, brand colors) */
+:root {
+  --scrollbar-thumb: rgba(91, 192, 190, 0.35); /* tropical-teal */
+  --scrollbar-thumb-hover: rgba(111, 255, 233, 0.55); /* neon-ice */
+}
+
+/* Firefox */
+html { scrollbar-width: thin; scrollbar-color: var(--scrollbar-thumb) transparent; }
+
+/* WebKit (Chrome/Edge/Safari) */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(111,255,233,0.45), rgba(91,192,190,0.45));
+  border-radius: 999px;
+  border: 2px solid rgba(0,0,0,0.6);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, rgba(111,255,233,0.7), rgba(91,192,190,0.7));
+}
+/* light theme overrides */
+html[data-theme='light'] body {
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+html[data-theme='light'] .text-slate-100 { color: #0f172a !important; }
+html[data-theme='light'] .text-slate-200 { color: #1f2937 !important; }
+html[data-theme='light'] .text-slate-300 { color: #374151 !important; }
+/* Navbar in light mode is handled in component classes; don't force here */
+html[data-theme='light'] header.sticky { color: #111827; }
+
+/* Light theme component overrides for utility classes used throughout */
+html[data-theme='light'] .border-white\/10 { border-color: rgba(0,0,0,0.12) !important; }
+html[data-theme='light'] .ring-white\/10 { --tw-ring-color: rgba(0,0,0,0.12) !important; }
+html[data-theme='light'] .bg-white\/5 { background-color: rgba(255,255,255,0.7) !important; }
+html[data-theme='light'] .bg-black\/40 { background-color: rgba(0,0,0,0.06) !important; }
+
+/* Inputs in light mode */
+html[data-theme='light'] input, html[data-theme='light'] textarea, html[data-theme='light'] select {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border-color: rgba(0,0,0,0.15) !important;
+}
+html[data-theme='light'] ::placeholder { color: #64748b; }
+
+/* Underline form style for contact */
+/* Underline layout: row has the line; inputs are clean */
+.form-underline .field {
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid rgba(255,255,255,0.18);
+}
+html[data-theme='light'] .form-underline .field { border-bottom-color: rgba(0,0,0,0.22); }
+
+.form-underline input, .form-underline textarea {
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  padding-left: 0.25rem !important;
+  padding-right: 0.25rem !important;
+  color: inherit !important;
+}
+.form-underline input:focus, .form-underline textarea:focus {
+  outline: none !important;
+}
+.form-underline .field:focus-within { border-bottom-color: var(--tropical-teal) !important; }
+
+/* Pills in Projects filter */
+.pill { border-color: rgba(255,255,255,0.15); color: #e5e7eb; }
+.pill--active { border-color: var(--tropical-teal); background: rgba(255,255,255,0.08); color: #fff; }
+html[data-theme='light'] .pill { border-color: rgba(0,0,0,0.14) !important; color: #334155 !important; background: rgba(255,255,255,0.7); }
+html[data-theme='light'] .pill--active { border-color: var(--tropical-teal) !important; background: rgba(111,255,233,0.12) !important; color: #0f172a !important; }
+
+/* Timeline line visibility in light */
+html[data-theme='light'] .border-white\/10 { border-color: rgba(0,0,0,0.2) !important; }
+
+
+/* Footer in light */
+html[data-theme='light'] footer.app-footer { background-color: rgba(255,255,255,0.85) !important; color: #334155 !important; border-color: rgba(0,0,0,0.12) !important; }
+
+/* BottomNav in light mode */
+html[data-theme='light'] .bottom-nav-container {
+  border-color: rgba(0,0,0,0.12) !important;
+  background-color: rgba(255,255,255,0.85) !important;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.1) !important;
+}
+html[data-theme='light'] .bottom-nav-list {
+  color: #475569 !important;
+}
+html[data-theme='light'] .bottom-nav-list a:hover {
+  background-color: rgba(0,0,0,0.05) !important;
+  color: var(--tropical-teal) !important;
+}
+
+/* Back to top button - green with blur */
+.backtotop {
+  background: linear-gradient(135deg, rgba(91, 192, 190, 0.4), rgba(111, 255, 233, 0.3)) !important;
+  color: #ffffff !important;
+  backdrop-filter: blur(16px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+  box-shadow: 0 8px 32px rgba(91, 192, 190, 0.4), 0 0 0 1px rgba(91, 192, 190, 0.2) inset !important;
+  border: 2px solid rgba(111, 255, 233, 0.5) !important;
+}
+.backtotop:hover {
+  background: linear-gradient(135deg, rgba(91, 192, 190, 0.6), rgba(111, 255, 233, 0.5)) !important;
+  box-shadow: 0 12px 40px rgba(91, 192, 190, 0.5), 0 0 0 1px rgba(111, 255, 233, 0.6) inset !important;
+  border-color: rgba(111, 255, 233, 0.8) !important;
+}
+html[data-theme='light'] .backtotop {
+  background: linear-gradient(135deg, rgba(91, 192, 190, 0.35), rgba(111, 255, 233, 0.25)) !important;
+  color: #0f172a !important;
+  box-shadow: 0 8px 32px rgba(91, 192, 190, 0.3), 0 0 0 1px rgba(91, 192, 190, 0.15) inset !important;
+  border-color: rgba(91, 192, 190, 0.4) !important;
+}
+html[data-theme='light'] .backtotop:hover {
+  background: linear-gradient(135deg, rgba(91, 192, 190, 0.5), rgba(111, 255, 233, 0.4)) !important;
+  box-shadow: 0 12px 40px rgba(91, 192, 190, 0.4), 0 0 0 1px rgba(111, 255, 233, 0.5) inset !important;
+  border-color: rgba(91, 192, 190, 0.6) !important;
+}
+
+/* Hide scrollbar utility */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari and Opera */
 }

@@ -34,3 +34,29 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Project Structure
+
+Recommended high-level layout for this repo:
+
+```
+app/                      # App Router pages, layouts, route handlers
+  (routes)/               # Route groups (organizational only)
+  api/                    # Route handlers (API)
+components/               # Reusable UI + layout components
+  ui/                     # Low-level UI primitives
+  layout/                 # Shell, navbar, footer, etc.
+lib/                      # Shared logic
+  client/                 # Client-only utilities
+  server/                 # Server-only utilities
+hooks/                    # React hooks (client/server)
+types/                    # TypeScript types
+constants/                # App-wide constants
+services/                 # API clients / data services
+config/                   # Configuration (feature flags, site config)
+public/
+  images/ icons/ fonts/   # Static assets
+.vscode/settings.json     # Editor settings (exclude .next, etc.)
+```
+
+Path alias `@/*` points to the repo root, so you can import like `import Button from '@/components/ui/Button'`.
