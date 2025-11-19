@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ComponentType } from "react";
 import {
   SiNextdotjs,
   SiReact,
@@ -51,7 +51,14 @@ const ICONS = [
   SiAmazon,
 ];
 
-type Item = { x: number; y: number; size: number; drift: "x" | "y"; depth: number; Icon: (p: { size?: number }) => JSX.Element };
+type Item = {
+  x: number;
+  y: number;
+  size: number;
+  drift: "x" | "y";
+  depth: number;
+  Icon: ComponentType<{ size?: number }>
+};
 
 // ตำแหน่งคงที่ (กระจายซ้าย-ขวา-บน-ล่าง) จำนวนพอดีกับไอคอนด้านบน
 const POS: Array<{ x: number; y: number }> = [

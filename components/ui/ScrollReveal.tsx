@@ -1,8 +1,8 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ElementType, type PropsWithChildren } from "react";
 
-type Props = React.PropsWithChildren<{
-  as?: keyof JSX.IntrinsicElements;
+type Props = PropsWithChildren<{
+  as?: ElementType;
   className?: string;
   delay?: number; // ms before reveal
   y?: number; // translateY px (initial)
