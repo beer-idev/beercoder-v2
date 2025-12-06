@@ -26,7 +26,7 @@ export default function About() {
         <div className="relative flex items-center justify-center">
           <div className="relative h-64 w-64 overflow-hidden rounded-full ring-2 ring-[color:var(--tropical-teal)]/40">
             <Image 
-              src="/images/profile1.jpg" 
+              src="/images/profile.png" 
               alt="Profile" 
               fill 
               className="object-cover" 
